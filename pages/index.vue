@@ -3,21 +3,27 @@
     <div class="bg-gray-100 min-h-screen flex flex-col items-center">
       <!-- Static Header -->
       <header class="bg-gray-600 text-white py-4 w-full text-center">
-        <h1 class="text-2xl font-bold">Nuxt 2 & @7span/nuxt-apollo-module Demo App</h1>
+        <h1 class="text-2xl font-bold">
+          Nuxt 2 & @7span/nuxt-apollo-module Demo App
+        </h1>
       </header>
 
       <!-- Centered Button -->
       <div class="mt-6">
         <button
-          @click="showTextArea"
-          class="text-white py-2 px-4 rounded-full hover:border-black hover:border transition-all duration-30"
-          :class="
-            isLoading ? 'bg-gray-300' : 'bg-gray-500 text-white font-bold'
-          "
+          @click="getStories"
+          class="text-white py-2 px-4 rounded-full hover:border-black hover:border transition-all duration-30 bg-gray-500 text-white font-bold"
         >
-          {{ isLoading ? "Fetching Data ..." : "Click Me" }}
+          Click Me to get Stories
+        </button>
+        <button
+          @click="getLocation"
+          class="text-white py-2 px-4 rounded-full hover:border-black hover:border transition-all duration-30 bg-gray-500 text-white font-bold"
+        >
+          Click Me to get Location
         </button>
       </div>
+      <div class="mt-6" v-if="isLoading">Loading.......</div>
 
       <!-- Big Text Area (Initially Hidden) -->
       <div class="mt-6" v-if="showTextAreaFlag">
@@ -32,13 +38,15 @@
 </template>
 
 <script>
+import trips from "@/graphql/home.gql";
+import locations from "@/graphql/location.gql";
 export default {
   name: "IndexPage",
   data() {
     return {
       showTextAreaFlag: false,
       textAreaContent: "",
-      responseData: null,
+      StoriesData: null,
       isLoading: false,
     };
   },
@@ -46,12 +54,59 @@ export default {
     showTextArea() {
       this.showTextAreaFlag = true;
     },
+    getStories() {
+      this.isLoading = true;
+      this.$apollo
+        .query({
+          query: trips,
+          variables: {
+            // filter: {
+            //   type_id: { eq: this.currentTypes },
+            // },
+            // currentPage: 1,
+            pageSize: 9,
+          },
+          context: {
+            headers: {
+              store: "alike",
+              authorization: `Bearer`,
+              "Content-Currency": "USD",
+            },
+          },
+        })
+        .then(({ data }) => {
+          this.StoriesData = data?.homepage_stories_products?.items;
+          console.log("🔥 Stories : ", this.StoriesData);
+          this.isLoading = false;
+        })
+        .catch((err) => {
+          this.isLoading = false;
+          this.$nuxt.error({ statusCode: 503, message: err });
+        });
+      // .finally(() => (this.isLoading = false));
+    },
+    getLocation() {
+      this.isLoading = true;
+      this.$apollo
+        .query({
+          query: locations,
+        })
+        .then((res) => {
+          console.log("💧 Locations : ", res);
+          // this.cityTypes = res.data.CategoryImageId;
+          this.isLoading = false;
+        })
+        .catch((err) => {
+          console.log("Error", err);
+          this.isLoading = false;
+        });
+    },
   },
-  created() {
-    console.log("Created");
-  },
-  mounted() {
-    console.log("mounted");
-  },
+  // created() {
+  //   console.log("Created");
+  // },
+  // mounted() {
+  //   console.log("mounted");
+  // },
 };
 </script>

@@ -1,0 +1,8 @@
+query {
+  CategoryImageId {
+    attribute_id
+    category_id
+    category_image
+    city_name
+  }
+}

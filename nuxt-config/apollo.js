@@ -2,6 +2,12 @@ const config = {
   httpEndpoint: "https://api.alike.host/graphql",
   httpLinkOptions: {
     credentials: "include",
+    fetchOptions: {
+      // Uncomment this to make a GET Request , but it would not work while sending details in body
+      // GET Request allows pass data in params not on body
+      
+      // method: 'GET',
+    },
   },
   defaultOptions: {
     watchQuery: {
@@ -21,5 +27,5 @@ export default {
     default: config,
   },
   includeNodeModules: true,
-//   errorHandler: "~/plugins/apollo-error-handler.js",
+  //   errorHandler: "~/plugins/apollo-error-handler.js",
 };
