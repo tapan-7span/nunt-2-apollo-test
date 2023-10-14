@@ -1,5 +1,5 @@
 const config = {
-  httpEndpoint: "https://api.alike.host/graphql",
+  httpEndpoint: "",//put endpoint here
   httpLinkOptions: {
     credentials: "include",
     fetchOptions: {
