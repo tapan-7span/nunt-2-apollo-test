@@ -1,4 +1,3 @@
-import apollo from "./nuxt-config/apollo.js";
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -8,7 +7,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "nuxt2-apollo",
+    title: "nuxt2-directus",
     htmlAttrs: {
       lang: "en",
     },
@@ -25,7 +24,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ["~/plugins/directus.js"],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -34,13 +33,12 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
     "@nuxtjs/tailwindcss",
-    "@7span/nuxt-apollo-module",
   ],
+  // plugins: ["plugins/directus.js"],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ["@nuxtjs/tailwindcss"],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-  apollo,
 };
