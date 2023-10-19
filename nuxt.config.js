@@ -1,4 +1,3 @@
-import apollo from "./nuxt-config/apollo.js";
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -8,7 +7,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "nuxt2-apollo",
+    title: "nuxt2-playground",
     htmlAttrs: {
       lang: "en",
     },
@@ -34,7 +33,6 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
     "@nuxtjs/tailwindcss",
-    "@7span/nuxt-apollo-module",
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -42,5 +40,4 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
-  apollo,
 };
